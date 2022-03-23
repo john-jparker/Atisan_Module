@@ -23,6 +23,6 @@ class BrandServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'Brand');
     }
 }

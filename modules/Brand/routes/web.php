@@ -17,5 +17,13 @@ use Inertia\Inertia;
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/brand', function () {
-    return 'Hello Brand';
+    return Inertia::render('Brand::Brand');
 })->name('brand.create');
+
+//Route::middleware(['auth:sanctum', 'verified'])->post('/brand', function (\Illuminate\Http\Request $request) {
+//    dd($request->all());
+//})->name('brand.store');
+
+Route::post('brand', function (\Illuminate\Http\Request $request){
+    dd($request->all());
+});

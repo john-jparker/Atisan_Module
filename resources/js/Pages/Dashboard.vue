@@ -4,7 +4,7 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Dashboard
             </h2>
-            <Link :href="route('brand.create')" class="mt-10 p-2 rounded bg-green-900 text-white">Add Brand</Link>
+            <Link href="/brand" class="mt-10 p-2 rounded bg-green-900 text-white">Add Brand</Link>
         </template>
 
         <div class="py-12">
