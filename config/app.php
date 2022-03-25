@@ -178,7 +178,9 @@ return [
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
         Rsruman\Brand\Providers\BrandServiceProvider::class,
-        Rsruman\Brand\Providers\RouteServiceProvider::class
+        Rsruman\Brand\Providers\RouteServiceProvider::class,
+        Rsruman\Category\Providers\CategoryServiceProvider::class,
+        Rsruman\Category\Providers\RouteServiceProvider::class
 
     ],
 

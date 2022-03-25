@@ -28,7 +28,8 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "Rsruman\\Brand\\": "modules/Brand/src"
+            "Rsruman\\Brand\\": "modules/Brand/src",
+            "Rsruman\\Category\\": "modules/Category/src"
         }
     },
     "autoload-dev": {
