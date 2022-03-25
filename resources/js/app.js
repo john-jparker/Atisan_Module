@@ -18,7 +18,7 @@ createInertiaApp({
         }
         if (type) {
             let nameVue = parts[1].split('.')[0]
-            return import("../../modules/" + parts[0] + "/resources/js/Pages/" + nameVue + ".vue")
+            return import("../../modules/" + parts[0] + "/src/resources/js/Pages/" + nameVue + ".vue")
         }else {
             return import(`./Pages/${name}`)
         }

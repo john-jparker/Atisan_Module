@@ -1,0 +1,19 @@
+{
+    "name": "rsruman/brand",
+    "description": "This will create a simple brand form and do the other staff to store brand data",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Rsruman\\Brand\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "RsRuman",
+            "email": "rsbdruman@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}

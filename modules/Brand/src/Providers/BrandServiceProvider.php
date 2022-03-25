@@ -1,6 +1,6 @@
 <?php
 
-namespace Brand\Providers;
+namespace Rsruman\Brand\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

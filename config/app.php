@@ -1,5 +1,6 @@
 <?php
 
+
 return [
 
     /*
@@ -176,8 +177,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
-        Brand\Providers\BrandServiceProvider::class,
-        Brand\Providers\RouteServiceProvider::class
+        Rsruman\Brand\Providers\BrandServiceProvider::class,
+        Rsruman\Brand\Providers\RouteServiceProvider::class
 
     ],
 
