@@ -1,0 +1,19 @@
+{
+    "name": "rsruman/category",
+    "description": "This will create a three level category form and do other staff to store category data",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Rsruman\\Category\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "RsRuman",
+            "email": "rsbdruman@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}

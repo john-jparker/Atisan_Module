@@ -16,7 +16,9 @@
                         <div class="max-w-full sm:max-w-3xl mx-auto h-screen flex items-center">
                             <form @submit.prevent="submit" class="w-full sm:w-[250px] p-4 mx-auto flex flex-col bg-gray-200 rounded-md">
                                 <input type="text" placeholder="Ex: Brand Name" class="px-3 py-2.5 border-2 border-gray-800 rounded-md" v-model="form.name">
+                                <div v-if="this.$attrs.errors.name">{{ this.$attrs.errors.name }}</div>
                                 <input type="text" placeholder="Ex: brand-slug" class="px-3 py-2.5 mt-2 border-2 border-gray-800 rounded-md" v-model="form.slug">
+                                <div v-if="this.$attrs.errors.slug">{{ this.$attrs.errors.slug }}</div>
                                 <button class="p-2 rounded-md bg-green-900 text-white mt-3" type="submit">Submit</button>
                             </form>
                         </div>
@@ -44,9 +46,12 @@ export default defineComponent({
             slug: null,
         })
         function submit() {
-            Inertia.post('/brand', form)
+            Inertia.post('/brand', form, {
+                preserveScroll: true,
+                onSuccess: () => form.reset('name', 'slug')
+            })
         }
         return { form, submit }
-    },
+    }
 })
 </script>

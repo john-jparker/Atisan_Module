@@ -23,6 +23,8 @@ class BrandServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->loadRoutesFrom(__DIR__.'/../Routes/web.php');
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'Brand');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
     }
 }

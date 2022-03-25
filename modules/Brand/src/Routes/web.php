@@ -15,14 +15,7 @@ use Inertia\Inertia;
 */
 
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/brand', function () {
-    return Inertia::render('Brand::Brand');
-})->name('brand.create');
-
-//Route::middleware(['auth:sanctum', 'verified'])->post('/brand', function (\Illuminate\Http\Request $request) {
-//    dd($request->all());
-//})->name('brand.store');
-
-Route::post('brand', function (\Illuminate\Http\Request $request){
-    dd($request->all());
+Route::middleware(['auth:sanctum', 'verified'])->group(function (){
+    Route::post('/brand', [\Rsruman\Brand\Controllers\BrandController::class, 'store'])->name('brand.store');
+    Route::get('/brand', [\Rsruman\Brand\Controllers\BrandController::class, 'create'])->name('brand.create');
 });
