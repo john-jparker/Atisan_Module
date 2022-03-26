@@ -24,7 +24,7 @@ class CategoryServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadRoutesFrom(__DIR__.'/../Routes/web.php');
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'Brand');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'Category');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
     }
 }

@@ -13,9 +13,27 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <!--Category Adding Form Start -->
-                    <section class="bg-white">
+                    <section class="bg-white p-2">
                         <div class="max-w-full sm:max-w-3xl mx-auto h-screen flex items-center">
                             <form @submit.prevent="submit" class="w-full sm:w-[250px] p-4 mx-auto flex flex-col bg-gray-200 rounded-md">
+                                <!-- Parent dropdown item -->
+                                <select class="border border-2 rounded border-green-900" v-model="form.parent_name">
+                                    <option value="volvo">Volvo</option>
+                                    <option value="saab">Saab</option>
+                                    <option value="opel">Opel</option>
+                                    <option value="audi">Audi</option>
+                                </select>
+
+                                <!-- Child dropdown item -->
+                                <select class="border border-2 mt-2 rounded" v-model="form.child_name">
+                                    <option value="volvo">Volvo</option>
+                                    <option value="saab">Saab</option>
+                                    <option value="opel">Opel</option>
+                                    <option value="audi">Audi</option>
+                                </select>
+
+                                <!-- Category Name -->
+                                <input type="text" class="border border-2 mt-2 rounded" v-model="form.sub_child_name">
 
                                 <button class="p-2 rounded-md bg-green-900 text-white mt-3" type="submit">Submit</button>
                             </form>
@@ -40,13 +58,14 @@ export default defineComponent({
     },
     setup () {
         const form = reactive({
-            name: null,
-            slug: null,
+            parent_name: null,
+            child_name: null,
+            sub_child_name: null
         })
         function submit() {
             Inertia.post(route('category.store'), form, {
                 preserveScroll: true,
-                onSuccess: () => form.reset('name', 'slug')
+                onSuccess: () => form.reset('parent_name', 'child_name', 'sub_child_name')
             })
         }
         return { form, submit }

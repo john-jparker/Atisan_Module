@@ -13,7 +13,7 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <!--Brand Adding Form Start -->
-                    <section class="bg-white">
+                    <section class="bg-white p-2">
                         <div class="max-w-full sm:max-w-3xl mx-auto h-screen flex items-center">
                             <form @submit.prevent="submit" class="w-full sm:w-[250px] p-4 mx-auto flex flex-col bg-gray-200 rounded-md">
                                 <input type="text" placeholder="Ex: Brand Name" class="px-3 py-2.5 border-2 border-gray-800 rounded-md" v-model="form.name">

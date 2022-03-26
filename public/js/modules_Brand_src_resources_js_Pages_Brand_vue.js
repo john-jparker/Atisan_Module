@@ -318,7 +318,7 @@ var _hoisted_6 = {
   "class": "bg-white overflow-hidden shadow-xl sm:rounded-lg"
 };
 var _hoisted_7 = {
-  "class": "bg-white"
+  "class": "bg-white p-2"
 };
 var _hoisted_8 = {
   "class": "max-w-full sm:max-w-3xl mx-auto h-screen flex items-center"
