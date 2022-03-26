@@ -17,23 +17,24 @@
                         <div class="max-w-full sm:max-w-3xl mx-auto h-screen flex items-center">
                             <form @submit.prevent="submit" class="w-full sm:w-[250px] p-4 mx-auto flex flex-col bg-gray-200 rounded-md">
                                 <!-- Parent dropdown item -->
-                                <select class="border border-2 rounded border-green-900" v-model="form.parent_name">
-                                    <option value="volvo">Volvo</option>
-                                    <option value="saab">Saab</option>
-                                    <option value="opel">Opel</option>
-                                    <option value="audi">Audi</option>
+                                <select class="border border-2 rounded border-green-900"
+                                        v-model="form.parent_name"
+                                        @change="onChangeParentCategory($event)">
+                                    <option :value="null" :selected="selected_category == null">Select parent category</option>
+                                    <option
+                                        v-for="parent_category in parent_categories"
+                                        :value="parent_category.slug">{{ parent_category.name }}</option>
                                 </select>
 
                                 <!-- Child dropdown item -->
                                 <select class="border border-2 mt-2 rounded" v-model="form.child_name">
-                                    <option value="volvo">Volvo</option>
-                                    <option value="saab">Saab</option>
-                                    <option value="opel">Opel</option>
-                                    <option value="audi">Audi</option>
+                                    <option :value="null">Select child category</option>
+                                    <option v-for="child_category in child_categories" :value="child_category.slug">{{ child_category.name }}</option>
                                 </select>
 
                                 <!-- Category Name -->
-                                <input type="text" class="border border-2 mt-2 rounded" v-model="form.sub_child_name">
+                                <input type="text" class="border border-2 mt-2 rounded" placeholder="Ex: Shirt" v-model="form.sub_child_name" required>
+                                <div class="text-red-500" v-if="this.$attrs.errors.sub_child_name">{{ this.$attrs.errors.sub_child_name }}</div>
 
                                 <button class="p-2 rounded-md bg-green-900 text-white mt-3" type="submit">Submit</button>
                             </form>
@@ -56,6 +57,11 @@ export default defineComponent({
     components: {
         AppLayout
     },
+    props: {
+        parent_categories: Object,
+        child_categories: Object,
+        selected_category: Object
+    },
     setup () {
         const form = reactive({
             parent_name: null,
@@ -65,10 +71,17 @@ export default defineComponent({
         function submit() {
             Inertia.post(route('category.store'), form, {
                 preserveScroll: true,
-                onSuccess: () => form.reset('parent_name', 'child_name', 'sub_child_name')
             })
         }
         return { form, submit }
+    },
+    methods: {
+        onChangeParentCategory: function (event){
+            Inertia.get(route('category.create'),{'category': event.target.value}, {
+                preserveScroll: true,
+                onSuccess: () => this.form.parent_name = event.target.value,
+            })
+        }
     }
 })
 </script>

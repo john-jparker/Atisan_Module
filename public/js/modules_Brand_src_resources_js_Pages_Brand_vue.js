@@ -324,10 +324,12 @@ var _hoisted_8 = {
   "class": "max-w-full sm:max-w-3xl mx-auto h-screen flex items-center"
 };
 var _hoisted_9 = {
-  key: 0
+  key: 0,
+  "class": "text-red-500"
 };
 var _hoisted_10 = {
-  key: 1
+  key: 1,
+  "class": "text-red-500"
 };
 
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {

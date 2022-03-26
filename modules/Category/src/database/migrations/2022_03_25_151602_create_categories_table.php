@@ -16,7 +16,7 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->string('image')->nullable();
             $table->timestamps();
         });
@@ -25,7 +25,7 @@ class CreateCategoriesTable extends Migration
             $table->id();
             $table->string('category_id');
             $table->string('name');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->string('image')->nullable();
             $table->timestamps();
         });
@@ -34,7 +34,7 @@ class CreateCategoriesTable extends Migration
             $table->id();
             $table->string('child_category_id');
             $table->string('name');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->string('image')->nullable();
             $table->timestamps();
         });
