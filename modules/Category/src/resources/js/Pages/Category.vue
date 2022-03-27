@@ -20,8 +20,9 @@
                                 <select class="border border-2 rounded border-green-900"
                                         v-model="form.parent_name"
                                         @change="onChangeParentCategory($event)">
-                                    <option :value="null" :selected="selected_category == null">Select parent category</option>
+                                    <option :value="null">Select parent category</option>
                                     <option
+                                        v-if="parent_categories"
                                         v-for="parent_category in parent_categories"
                                         :value="parent_category.slug">{{ parent_category.name }}</option>
                                 </select>
@@ -29,7 +30,7 @@
                                 <!-- Child dropdown item -->
                                 <select class="border border-2 mt-2 rounded" v-model="form.child_name">
                                     <option :value="null">Select child category</option>
-                                    <option v-for="child_category in child_categories" :value="child_category.slug">{{ child_category.name }}</option>
+                                    <option v-if="child_categories" v-for="child_category in child_categories" :value="child_category.slug">{{ child_category.name }}</option>
                                 </select>
 
                                 <!-- Category Name -->
@@ -58,12 +59,15 @@ export default defineComponent({
         AppLayout
     },
     props: {
-        parent_categories: Object,
-        child_categories: Object,
-        selected_category: Object
+        parent_categories: Object
+    },
+    data() {
+        return {
+            child_categories: null
+        }
     },
     setup () {
-        const form = reactive({
+        let form = reactive({
             parent_name: null,
             child_name: null,
             sub_child_name: null
@@ -71,16 +75,21 @@ export default defineComponent({
         function submit() {
             Inertia.post(route('category.store'), form, {
                 preserveScroll: true,
+                onSuccess: () => {
+                    this.form.parent_name= null
+                    this.form.child_name= null
+                    this.form.sub_child_name= null
+                }
             })
         }
         return { form, submit }
     },
     methods: {
         onChangeParentCategory: function (event){
-            Inertia.get(route('category.create'),{'category': event.target.value}, {
-                preserveScroll: true,
-                onSuccess: () => this.form.parent_name = event.target.value,
-            })
+            axios.get(route('category.child_category', {'category': event.target.value}))
+                .then((response) => {
+                    this.child_categories = response.data.data.child_categories
+                })
         }
     }
 })

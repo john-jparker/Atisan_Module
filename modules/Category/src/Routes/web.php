@@ -18,4 +18,5 @@ use Inertia\Inertia;
 Route::middleware(['auth:sanctum', 'verified'])->group(function (){
     Route::get('/category', [\Rsruman\Category\Controllers\CategoryController::class, 'create'])->name('category.create');
     Route::post('/category', [\Rsruman\Category\Controllers\CategoryController::class, 'store'])->name('category.store');
+    Route::get('/child-category', [\Rsruman\Category\Controllers\CategoryController::class, 'child_category'])->name('category.child_category');
 });

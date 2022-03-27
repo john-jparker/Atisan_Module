@@ -23,9 +23,12 @@ __webpack_require__.r(__webpack_exports__);
     AppLayout: _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   props: {
-    parent_categories: Object,
-    child_categories: Object,
-    selected_category: Object
+    parent_categories: Object
+  },
+  data: function data() {
+    return {
+      child_categories: null
+    };
   },
   setup: function setup() {
     var form = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)({
@@ -35,8 +38,15 @@ __webpack_require__.r(__webpack_exports__);
     });
 
     function submit() {
+      var _this = this;
+
       _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__.Inertia.post(route('category.store'), form, {
-        preserveScroll: true
+        preserveScroll: true,
+        onSuccess: function onSuccess() {
+          _this.form.parent_name = null;
+          _this.form.child_name = null;
+          _this.form.sub_child_name = null;
+        }
       });
     }
 
@@ -47,15 +57,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     onChangeParentCategory: function onChangeParentCategory(event) {
-      var _this = this;
+      var _this2 = this;
 
-      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__.Inertia.get(route('category.create'), {
+      axios.get(route('category.child_category', {
         'category': event.target.value
-      }, {
-        preserveScroll: true,
-        onSuccess: function onSuccess() {
-          return _this.form.parent_name = event.target.value;
-        }
+      })).then(function (response) {
+        _this2.child_categories = response.data.data.child_categories;
       });
     }
   }
@@ -340,7 +347,13 @@ var _hoisted_7 = {
 var _hoisted_8 = {
   "class": "max-w-full sm:max-w-3xl mx-auto h-screen flex items-center"
 };
-var _hoisted_9 = ["selected"];
+
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: null
+}, "Select parent category", -1
+/* HOISTED */
+);
+
 var _hoisted_10 = ["value"];
 
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
@@ -413,12 +426,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         onChange: _cache[1] || (_cache[1] = function ($event) {
           return _ctx.onChangeParentCategory($event);
         })
-      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-        value: null,
-        selected: _ctx.selected_category == null
-      }, "Select parent category", 8
-      /* PROPS */
-      , _hoisted_9), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.parent_categories, function (parent_category) {
+      }, [_hoisted_9, _ctx.parent_categories ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        key: 0
+      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.parent_categories, function (parent_category) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
           value: parent_category.slug
         }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(parent_category.name), 9
@@ -426,14 +436,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         , _hoisted_10);
       }), 256
       /* UNKEYED_FRAGMENT */
-      ))], 544
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 544
       /* HYDRATE_EVENTS, NEED_PATCH */
       ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, _ctx.form.parent_name]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Child dropdown item "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
         "class": "border border-2 mt-2 rounded",
         "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
           return _ctx.form.child_name = $event;
         })
-      }, [_hoisted_11, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.child_categories, function (child_category) {
+      }, [_hoisted_11, _ctx.child_categories ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        key: 0
+      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.child_categories, function (child_category) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
           value: child_category.slug
         }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(child_category.name), 9
@@ -441,7 +453,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         , _hoisted_12);
       }), 256
       /* UNKEYED_FRAGMENT */
-      ))], 512
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 512
       /* NEED_PATCH */
       ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, _ctx.form.child_name]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Category Name "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",

@@ -20,18 +20,8 @@ class CategoryController extends \App\Http\Controllers\Controller
 
     public function create(): \Inertia\Response
     {
-        if (\request()->has('category')){
-            $selected_category = Category::where('slug', \request('category'))->first();
-            if (!empty($selected_category)){
-                $parent_categories = Category::all();
-                $child_categories = ChildCategory::where('category_id', $selected_category->id)->get();
-                return Inertia::render('Category::Category', compact('parent_categories', 'child_categories', 'selected_category'));
-            }
-        }
         $parent_categories = Category::all();
-        $child_categories = null;
-        $selected_category = null;
-        return Inertia::render('Category::Category', compact('parent_categories', 'child_categories','selected_category'));
+        return Inertia::render('Category::Category', compact('parent_categories'));
     }
 
     public function store(Request $request): \Illuminate\Http\RedirectResponse
@@ -39,22 +29,24 @@ class CategoryController extends \App\Http\Controllers\Controller
         $validator = Validator::make($request->all(), [
            'parent_name' => 'nullable',
            'child_name' => 'nullable',
-           'sub_child_name' => 'required|min:3|max:15|unique:categories|unique:child_categories|unique:sub_child_categories'
+           'sub_child_name' => 'required|min:3|max:15|unique:categories,slug|unique:child_categories,slug|unique:sub_child_categories,slug'
         ],
         [
             'sub_child_name.required' => 'Category field is required',
             'sub_child_name.min' => 'Category name must be at least 3 characters',
-            'sub_child_name.max' => 'Category name must not be greater than 15 characters.'
+            'sub_child_name.max' => 'Category name must not be greater than 15 characters.',
+            'unique'    => 'Category name has already been taken.'
         ]);
         if ($validator->fails()){
-            return Redirect::route('category.create')->withErrors($validator->errors()->getMessages());
+            return \redirect()->back()->withErrors($validator->errors()->getMessages());
         }
         try {
             DB::beginTransaction();
             //Three level if inputted all fields
             if ($request->input('parent_name') !== null && $request->input('child_name') !== null){
+                $child = ChildCategory::where('slug', $request->input('child_name'))->first();
                 $category = SubChildCategory::create([
-                    'child_category_id' => $request->input('child_name'),
+                    'child_category_id' => $child->id,
                     'name' => $request->input('sub_child_name'),
                     'slug' => Str::slug($request->input('sub_child_name'))
                 ]);
@@ -66,8 +58,9 @@ class CategoryController extends \App\Http\Controllers\Controller
             }
             //Two level if inputted without child fields
             if ($request->input('parent_name') !== null &&  $request->input('child_name') === null){
+                $parent = Category::where('slug', $request->input('parent_name'))->first();
                 $category = ChildCategory::create([
-                    'category_id' => $request->input('parent_name'),
+                    'category_id' => $parent->id,
                     'name' => $request->input('sub_child_name'),
                     'slug' => Str::slug($request->input('sub_child_name')),
                 ]);
@@ -91,5 +84,18 @@ class CategoryController extends \App\Http\Controllers\Controller
             DB::rollBack();
             return Redirect::route('category.create')->withErrors($ex->getMessage());
         }
+    }
+
+    public function child_category(): \Illuminate\Http\JsonResponse
+    {
+        $selected_category = Category::where('slug', \request('category'))->with('child_categories')->first();
+        if (!empty($selected_category)){
+            return response()->json([
+               'data' => $selected_category
+            ]);
+        }
+        return response()->json([
+            'message' => 'Please select valid data'
+        ]);
     }
 }
