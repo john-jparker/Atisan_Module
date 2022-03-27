@@ -29,7 +29,7 @@ class CategoryController extends \App\Http\Controllers\Controller
         $validator = Validator::make($request->all(), [
            'parent_name' => 'nullable',
            'child_name' => 'nullable',
-           'sub_child_name' => 'required|min:3|max:15|unique:categories,slug|unique:child_categories,slug|unique:sub_child_categories,slug'
+           'sub_child_name' => 'required|min:3|max:15|unique:categories,slug'
         ],
         [
             'sub_child_name.required' => 'Category field is required',

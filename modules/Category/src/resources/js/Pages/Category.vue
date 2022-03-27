@@ -79,6 +79,14 @@ export default defineComponent({
                     this.form.parent_name= null
                     this.form.child_name= null
                     this.form.sub_child_name= null
+                    if (this.$page.props.flash.message){
+                        this.$swal.fire({
+                            icon: 'success',
+                            title: 'Your work has been saved',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
                 }
             })
         }

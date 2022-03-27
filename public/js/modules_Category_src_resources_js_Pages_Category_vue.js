@@ -46,6 +46,15 @@ __webpack_require__.r(__webpack_exports__);
           _this.form.parent_name = null;
           _this.form.child_name = null;
           _this.form.sub_child_name = null;
+
+          if (_this.$page.props.flash.message) {
+            _this.$swal.fire({
+              icon: 'success',
+              title: 'Your work has been saved',
+              showConfirmButton: false,
+              timer: 1500
+            });
+          }
         }
       });
     }
